@@ -1,0 +1,213 @@
+<html>
+<head>
+<title> Шашки </title>
+</head>
+<body>
+<H1>Шашки</H1>
+	<button id='get_btn'>Построить доску!</button>
+	<div id = "div1">
+	</div>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script>
+	var table1 = '';
+	var count = 0;
+	$('#get_btn').click(function() {
+		table1 = table1 + '<table style=\'border: 1px solid;\'><tbody>';
+		for (i=0; i < 8; i++) {
+		table1 = table1 + '<tr>';
+	
+		 for (j=0; j < 8; j++){
+		if (i % 2 === 0) {
+			if (j % 2 === 0)
+				table1 = table1 + '<td style=\'border: 1px solid;\'><img id='+count+' src = "pustowhite.png"></img></td>';
+			else
+			if (i <= 2)
+				table1 = table1 + '<td style=\'border: 1px solid;\'><img id='+count+' src = "white.jpg"></img></td>';
+			else
+			if (i >= 5)
+				table1 = table1 + '<td style=\'border: 1px solid;\'><img id='+count+' src = "black.jpg"></img></td>';
+			else
+				table1 = table1 + '<td style=\'border: 1px solid; ;\'><img id='+count+' src = "pusto.png"></td>';
+				
+		 }
+		 else
+		 if (j % 2 === 0)
+			if (i <= 2)
+				table1 = table1 + '<td style=\'border: 1px solid;\'><img id='+count+' src = "white.jpg"></img></td>';
+			else
+				if (i >= 5)
+					table1 = table1 + '<td style=\'border: 1px solid;\'><img id='+count+' src = "black.jpg"></img></td>';
+				else
+					table1 = table1 + '<td style=\'border: 1px solid;\'><img id='+count+' src = "pusto.png"></td>';					
+		else
+			table1 = table1 + '<td style=\'border: 1px solid;\'><img id='+count+' src = "pustowhite.png"></img></td>';
+			
+		count = count + 1;
+		 
+		 }
+			
+		
+			table1 = table1 + '</tr>';
+		}
+		table1 = table1 + '</tbody></table>';
+	
+		$('#div1').append(table1);
+	
+	var id = '';
+	var img = '';
+	var hod = 'w';
+	var tern_ok = false;
+	var flag;
+	
+	
+	
+	$('img').click(function() {
+	flag = false;
+
+	checkflag = false;
+	tern_ok = false;
+		if (id === '') {
+			if (hod === 'w' && ($(this).attr('src') === 'white.jpg' || $(this).attr('src') === 'Damka_white.jpg')){
+					$(this).animate({opacity : '0.5'});
+					id = $(this).attr('id');
+					img = $(this).attr('src');
+					tern_ok = true;
+	
+			}
+			
+				if (hod === 'b' && ($(this).attr('src') === 'black.jpg' || $(this).attr('src') === 'Damka_black.jpg')){
+					
+					$(this).animate({opacity : '0.5'});
+					id = $(this).attr('id');
+					img = $(this).attr('src');
+					tern_ok = true;
+					
+				}
+
+		}
+		else
+			if ($(this).attr('id') === id) {
+				$(this).animate({opacity : '1'});							
+				id = '';
+			}
+				if ($(this).attr('src') === 'pusto.png'){
+					tern_ok = true;
+				}
+		if (tern_ok){
+			if (id != '' && id != $(this).attr('id')) {							
+				if (parseFloat($(this).attr('id')) === parseFloat(id) + 7 || parseFloat($(this).attr('id')) === parseFloat(id) - 7 || parseFloat($(this).attr('id')) === parseFloat(id) + 9 || parseFloat($(this).attr('id')) === parseFloat(id) - 9) {
+					if ($(this).attr('src') === 'pusto.png') { 
+						$('#' + id).attr('src', 'pusto.png');
+						$(this).attr('src', img);
+						$('#' + id).animate({opacity : '1'});							
+						id = '';
+					}
+								
+				}
+				else
+					if($('#' + id).attr('src') == 'white.jpg'){
+						if (parseFloat($(this).attr('id')) === parseFloat(id) + 14 && $(this).attr('src') === 'pusto.png') {	
+							if ($('#' + parseFloat($(this).attr('id') - 7)).attr('src') === 'black.jpg'){
+								$('#' + id).attr('src', 'pusto.png');
+								$(this).attr('src', img);
+								$('#' + parseFloat($(this).attr('id') - 7)).attr('src','pusto.png');
+								$('#' + id).animate({opacity : '1'});								
+								id = '';
+							}
+						}
+						else
+							if (parseFloat($(this).attr('id')) === parseFloat(id) - 14 && $(this).attr('src') === 'pusto.png') {		
+								if ($('#' + (parseFloat($(this).attr('id')) + 7)).attr('src') === 'black.jpg'){
+									$('#' + id).attr('src', 'pusto.png');
+									$(this).attr('src', img);
+									$('#' + (parseFloat($(this).attr('id')) + 7)).attr('src','pusto.png');
+									$('#' + id).animate({opacity : '1'});								
+									id = '';
+									
+								}
+							}
+						else
+							if (parseFloat($(this).attr('id')) === parseFloat(id) + 18 && $(this).attr('src') === 'pusto.png') {		
+								if ($('#' + (parseFloat($(this).attr('id')) - 9)).attr('src') === 'black.jpg'){
+									$('#' + id).attr('src', 'pusto.png');
+									$(this).attr('src', img);
+									$('#' + (parseFloat($(this).attr('id')) - 9)).attr('src','pusto.png');
+									$('#' + id).animate({opacity : '1'});								
+									id = '';
+									
+								}
+							}
+						else
+							if (parseFloat($(this).attr('id')) === parseFloat(id) - 18 && $(this).attr('src') === 'pusto.png') {		
+								if ($('#' + (parseFloat($(this).attr('id')) + 9)).attr('src') === 'black.jpg'){
+									$('#' + id).attr('src', 'pusto.png');
+									$(this).attr('src', img);
+									$('#' + (parseFloat($(this).attr('id')) + 9)).attr('src','pusto.png');
+									$('#' + id).animate({opacity : '1'});								
+									id = '';
+								}
+							}
+					}
+					else	
+						if($('#' + id).attr('src') == 'black.jpg'){
+							if (parseFloat($(this).attr('id')) === parseFloat(id) + 14 && $(this).attr('src') === 'pusto.png') {	
+								if ($('#' + parseFloat($(this).attr('id') - 7)).attr('src') === 'white.jpg'){
+									$('#' + id).attr('src', 'pusto.png');
+									$(this).attr('src', img);
+									$('#' + parseFloat($(this).attr('id') - 7)).attr('src','pusto.png');
+									$('#' + id).animate({opacity : '1'});								
+									id = '';
+								
+								}
+							}
+							else
+								if (parseFloat($(this).attr('id')) === parseFloat(id) - 14 && $(this).attr('src') === 'pusto.png') {		
+									if ($('#' + (parseFloat($(this).attr('id')) + 7)).attr('src') === 'white.jpg'){
+										$('#' + id).attr('src', 'pusto.png');
+										$(this).attr('src', img);
+										$('#' + (parseFloat($(this).attr('id')) + 7)).attr('src','pusto.png');
+										$('#' + id).animate({opacity : '1'});								
+										id = '';
+									
+									}
+								}
+							else
+								if (parseFloat($(this).attr('id')) === parseFloat(id) + 18 && $(this).attr('src') === 'pusto.png') {		
+									if ($('#' + (parseFloat($(this).attr('id')) - 9)).attr('src') === 'white.jpg'){
+										$('#' + id).attr('src', 'pusto.png');
+										$(this).attr('src', img);
+										$('#' + (parseFloat($(this).attr('id')) - 9)).attr('src','pusto.png');
+										$('#' + id).animate({opacity : '1'});								
+										id = '';
+									}
+								}
+							else
+								if (parseFloat($(this).attr('id')) === parseFloat(id) - 18 && $(this).attr('src') === 'pusto.png') {		
+									if ($('#' + (parseFloat($(this).attr('id')) + 9)).attr('src') === 'white.jpg'){
+										$('#' + id).attr('src', 'pusto.png');
+										$(this).attr('src', img);
+										$('#' + (parseFloat($(this).attr('id')) + 9)).attr('src','pusto.png');
+										$('#' + id).animate({opacity : '1'});								
+										id = '';
+										
+									}
+								}
+						}
+
+							
+							
+				if (!flag){
+					if (hod === 'w')
+						hod = 'b';
+					else 
+						hod = 'w';
+				}
+			}
+		}
+			tern_ok = false;
+	 }
+	)
+});
+	</script>
+</body>
+</html>
